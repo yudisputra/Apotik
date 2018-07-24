@@ -39,6 +39,13 @@ class Welcome extends CI_Controller {
 		$this->load->view('antrian',$data);
 	}
 
+	public function daftarpenjualan()
+	{
+		$this->load->model('home_model');
+		$data["penjualan"] = $this->home_model->daftarpenjualan();
+		$this->load->view('daftarpenjualan',$data);
+	}
+
 	public function daftarobat()
 	{
 		$this->load->model('home_model');
@@ -70,12 +77,30 @@ class Welcome extends CI_Controller {
 		$this->load->model('admin_model');
 		$data['pelanggan']=$this->home_model->getpelanggan($id);
 		$data['obat']=$this->admin_model->getAllobat();
+		$data['pegawai']=$this->admin_model->getAllpegawai();
 		$this->load->view('penjualan',$data);
 	}
 
 	public function inputpenjualan()
 	{
 		$this->load->model('home_model');
-		$this->home_model->insertpenjualan();
+		$idobat = $this->input->post('pilihobat');
+		$total = $this->input->post('jumlahobat');
+		$harga=$this->home_model->gethargastockobat($idobat);
+
+		$no = 0; 
+		$stock = 0;
+		foreach ($harga as $key) {
+		$no = $key->harga;
+		$stock = $key->stock; }
+		
+		$totalharga = $no*$total;
+		$stockbaru = $stock-$total;
+		var_dump($stock);
+		$this->home_model->insertpenjualan($idobat,$total,$totalharga);
+		$this->home_model->updatestok($idobat,$stockbaru);
+		$this->daftarpenjualan();
 	}
+
+
 }

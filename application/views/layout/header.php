@@ -17,7 +17,7 @@
 				<li><a href="<?php echo base_url('welcome/home'); ?>">Halaman Utama</a></li>
 				<li><a href="<?php echo base_url('Welcome/antrian'); ?>">Antrian</a></li>
 				<li><a href="<?php echo base_url('welcome/daftarobat'); ?>">Daftar Obat</a></li>
-				<li><a href="<?php echo base_url('welcome/daftarManga'); ?>">Penjualan</a></li>
+				<li><a href="<?php echo base_url('welcome/daftarpenjualan'); ?>">Penjualan</a></li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">

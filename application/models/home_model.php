@@ -9,6 +9,12 @@ class home_model extends CI_Model {
   		 return $query->result();
 	}
 
+	public function daftarpenjualan()
+	{
+ 		 $query = $this->db->query('Select p.kodetransaksi,p.tanggaltransaksi,p.noantrian,l.namapelanggan,p.total FROM penjualan as p INNER JOIN pelanggan as l ON p.noantrian=l.noantrian');
+  		 return $query->result();
+	}
+
 	public function insertpelanggan()
 	{
  		 $object = array('namapelanggan' => $this->input->post('namapelanggan'), 'alamat' => $this->input->post('alamat'));
@@ -28,20 +34,26 @@ class home_model extends CI_Model {
   		return $query->result();
 	}
 
-	public function insertpenjualan()
+	public function insertpenjualan($idobat,$total,$totalharga)
 	{
-		 $idobat = $this->input->post('pilihobat');
-		 $total = $this->input->post('jumlahobat');
-
-		 $query = $this->db->query("select sum(harga) from obat where idobat=".$idobat);
-		 echo var_dump($query);
-		 // $result = $query->row(); // returns a single result row
-
- 		//  $harga = intval($result)*$total;
-
-
- 		 $object = array('kodetransaksi' => $this->input->post('kodetransaksi'),'tanggaltransaksi' => $this->input->post('tanggaltransaksi'), 'noantrian' => $this->input->post('noantrian'), 'idpegawai' => $this->input->post('idpegawai'),'idobat' => $idobat, 'jumlahobat' => $total, 'total' => $bayar);
+ 		 $object = array('tanggaltransaksi' => $this->input->post('tanggaltransaksi'), 'noantrian' => $this->input->post('noantrian'), 'idpegawai' => $this->input->post('idpegawai'),'idobat' => $idobat, 'jumlahobat' => $total, 'total' => $totalharga);
  		  $this->db->insert('penjualan', $object);
+	}
+
+	public function updatestok($idobat,$kurangstok) 
+    { 
+        $this->db->set('stock',$kurangstok);
+		$this->db->where('idobat', $idobat);
+		$this->db->update('obat');
+    } 
+
+	public function gethargastockobat($idobat)
+	{
+		$this->db->select('*');
+        $this->db->from('obat');
+        $this->db->where('idobat', $idobat);
+        $query = $this->db->get();
+        return $query->result();
 	}
 
 	public function deleteById($id)

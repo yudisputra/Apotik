@@ -14,8 +14,12 @@
 			<input type="text" class="form-control" id="noantrian" name="noantrian" value="<?php echo $pelanggan[0]->noantrian?>">
 			<label for="">Nama Pelanggan</label>
 			<input type="text" class="form-control" id="namapelanggan" name="namapelanggan" value="<?php echo $pelanggan[0]->namapelanggan?>">
-			<label for="">ID Pegawai</label>
-			<input type="text" class="form-control" id="idpegawai" name="idpegawai">
+			<label for="sel1">Nama Pegawai</label>
+  				<select class="form-control" id="idpegawai" name="idpegawai">
+  				<?php foreach ($pegawai as $key) { ;?>
+   		    	<option value="<?php echo $key->idpegawai?>"><?php echo $key->namapegawai?></option>
+   		     	<?php } ?> 
+  				</select>
 			<label for="sel1">Input Obat</label>
   				<select class="form-control" id="pilihobat" name="pilihobat">
   				<?php foreach ($obat as $key) { ;?>
